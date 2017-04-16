@@ -36,8 +36,10 @@ boxsize = 100.0 # in Mpc/h
 boxsize_mpc = 100.0/h
 npix_sim = 512.
 
+rebin_size = 128 # The size of the downsampled box grid
+
 # Read in downsampled redshift-space DM density and tau
-f = h5Py.File('4096-512bin_128downsample.h5')
+f = h5py.File('4096-512bin_128downsample.h5')
 dm_density_bin = f['dm_density_bin'][:,:,:]
 tau_bin = f['tau_bin'][:,:,:]
 flux = np.exp(-tau_bin)
