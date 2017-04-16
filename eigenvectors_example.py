@@ -36,20 +36,10 @@ boxsize = 100.0 # in Mpc/h
 boxsize_mpc = 100.0/h
 npix_sim = 512.
 
-# Read in tau and velocity
-f = h5py.File("/global/cscratch1/sd/akrolew/Alex/4096-512bin.h5")
-tau_red = f["derived_fields/tau_red"][:,:,:]
-vel_z = f["native_fields/velocity_z"][:,:,:]/10**5 #Convert to km/s
-deltachi = vel_z*(1+redshift)/hz
-
-# Read in the redshift-space density
-f = h5py.File("/global/cscratch1/sd/akrolew/Alex/4096-512bin_tot_density_rs.h5")
-dm_density_rs = f["tot_density_rs"][:,:,:]
-
-# Rebin the DM density and tau; define deltaf
-rebin_size = 128
-dm_density_bin = rebin(dm_density_rs, rebin_size, rebin_size, rebin_size)
-tau_bin = rebin(tau_red, rebin_size, rebin_size, rebin_size)
+# Read in downsampled redshift-space DM density and tau
+f = h5Py.File('4096-512bin_128downsample.h5')
+dm_density_bin = f['dm_density_bin'][:,:,:]
+tau_bin = f['tau_bin'][:,:,:]
 flux = np.exp(-tau_bin)
 deltaf = flux/np.mean(flux)-1.
 
